@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #
 # Copyright (C) 2000-2005 by Yasushi Saito (yasushi.saito@gmail.com)
 # 
@@ -11,16 +12,16 @@
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
-import tick_mark
-import line_style
-import pychart_util
-import error_bar
-import chart_object
-import legend
-import object_set
-import line_plot_doc
-import theme
-from pychart_types import *
+from . import tick_mark
+from . import line_style
+from . import pychart_util
+from . import error_bar
+from . import chart_object
+from . import legend
+from . import object_set
+from . import line_plot_doc
+from . import theme
+from .pychart_types import *
 from types import *
 
 default_width = 1.2
@@ -48,7 +49,7 @@ _keys = {
     'y_qerror_minus_col':  (IntType, -1, '<<error_bar>>'),
     'y_qerror_plus_col':  (IntType, -1, '<<error_bar>>'),
 
-    'line_style': (line_style.T, lambda: line_style_itr.next(), pychart_util.line_desc,
+    'line_style': (line_style.T, lambda: next(line_style_itr), pychart_util.line_desc,
                    "By default, a style is picked from standard styles round-robin. <<line_style>>"),
 
     'tick_mark': (tick_mark.T, None, pychart_util.tick_mark_desc),
@@ -78,7 +79,7 @@ class T(chart_object.T):
                              getattr(self.error_bar, 'hline_style', None) or \
                              getattr(self.error_bar, 'vline_style', None)
                 if not line_style:
-                    raise Exception, 'Line plot has label, but an empty line style and error bar.'
+                    raise Exception('Line plot has label, but an empty line style and error bar.')
             return legend.Entry(line_style=line_style,
                                 tick_mark=self.tick_mark,
                                 fill_style=None,

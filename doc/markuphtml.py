@@ -1,3 +1,4 @@
+from __future__ import print_function
 import re
 import sys
 
@@ -35,7 +36,7 @@ def hackimgref(mo):
     path = mo.group(1)
     i = path.rfind("/")
     path2 = path[(i+1):]
-    print >>sys.stderr, "PATH=", path, path2
+    print("PATH=", path, path2, file=sys.stderr)
     return 'SRC="%s"' % path2
     
 in_example = False
@@ -49,13 +50,13 @@ for l in sys.stdin.readlines():
         
     if not in_example:
         l = re.sub("<head>", """<head><style type="text/css">\npre {background-color: #e0e0e0}\n</style>\n""", l)
-        print l,
+        print(l, end=' ')
         continue
 
     for str, ref in pats:
         l = re.sub("(" + str + ")", "<a href=\"%s.html\">\\1</a>" % ref, l)
         #l = re.sub(str, "<a href=\"%s.html\">\\1</a>" % ref, l)
-    print l,
+    print(l, end=' ')
     
         
 

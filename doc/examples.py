@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sys
 sys.path.append("..")
 sys.path.append("../demos")
@@ -35,14 +36,14 @@ for file in list_sources.list_sources("../demos"):
     src_file = "%s/%s/%s" % (cwd, target_dir, file)
     os.environ["PYTHONPATH"] = "..:" + os.environ.get("PYTHONPATH", "")
     if not os.access(pngFile, os.R_OK):
-        print "Creating ", pngFile
+        print("Creating ", pngFile)
         os.environ["PYCHART_OPTIONS"] = "color=yes scale=3 output=%s" % pngFile
         os.chdir("../demos")
         os.system(python_path + " " + file)
         os.chdir(cwd)
 
     if not os.access(smallPngFile, os.R_OK):
-        print "Creating ", smallPngFile
+        print("Creating ", smallPngFile)
         os.environ["PYCHART_OPTIONS"] = "color=yes scale=0.6 output=%s" % smallPngFile
         os.chdir("../demos")
         os.system(python_path + " " + file)

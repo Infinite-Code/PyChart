@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #
 # Copyright (C) 2000-2005 by Yasushi Saito (yasushi.saito@gmail.com)
 # 
@@ -11,18 +12,18 @@
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
-import tick_mark
-import font
-import line_style
-import color
-import fill_style
-import chart_object
-import pychart_util
+from . import tick_mark
+from . import font
+from . import line_style
+from . import color
+from . import fill_style
+from . import chart_object
+from . import pychart_util
 import types
-import legend_doc
-import theme
+from . import legend_doc
+from . import theme
 
-from pychart_types import *
+from .pychart_types import *
 from types import *
 
 class Entry(chart_object.T):
@@ -115,7 +116,7 @@ class T(chart_object.T):
         "loc": (CoordType, None,
                 """Bottom-left corner of the legend.
                 The default location of a legend is the bottom-right end of the chart."""),
-	"shadow": (ShadowType, None, pychart_util.shadow_desc),
+        "shadow": (ShadowType, None, pychart_util.shadow_desc),
         "nr_rows": (IntType, 9999, "Number of rows in the legend. If the number of plots in a chart is larger than nr_rows, multiple columns are created in the legend."),
 
         }
@@ -134,7 +135,7 @@ class T(chart_object.T):
         nr_cols = (len(entries)-1) / nr_rows + 1
         
         ymin = y
-	max_label_width = [0] * nr_cols
+        max_label_width = [0] * nr_cols
         max_sample_width = [0] * nr_cols
         heights = [0] * nr_rows
         
@@ -156,9 +157,9 @@ class T(chart_object.T):
         for w in max_sample_width:
             tot_width += w
             
-	can.rectangle(self.frame_line_style, self.frame_fill_style,
-                      x - self.left_fudge,	
-                      ymin - self.bottom_fudge,	
+        can.rectangle(self.frame_line_style, self.frame_fill_style,
+                      x - self.left_fudge,
+                      ymin - self.bottom_fudge,
                       x + tot_width + self.right_fudge,
                       ymax + self.top_fudge,
                       self.shadow)

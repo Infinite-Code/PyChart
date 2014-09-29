@@ -91,7 +91,7 @@ def get_line_style(p):
         styles = greyscale_line_styles
     else:
         styles = color_line_styles
-    if styles.has_key(p):
+    if p in styles:
         return styles[p]
     else:
         pychart_util.error("unknown policy:", p)

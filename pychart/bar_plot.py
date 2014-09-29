@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #
 # Copyright (C) 2000-2005 by Yasushi Saito (yasushi.saito@gmail.com)
 # 
@@ -11,16 +12,16 @@
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
-import line_style
-import fill_style
-import pychart_util
-import chart_object
-import legend
-import error_bar
-import bar_plot_doc
-import theme
+from . import line_style
+from . import fill_style
+from . import pychart_util
+from . import chart_object
+from . import legend
+from . import error_bar
+from . import bar_plot_doc
+from . import theme
 from types import *
-from pychart_types import *
+from .pychart_types import *
 
 fill_styles = None
 
@@ -63,7 +64,7 @@ The
              See also the description of the 'bcol' attribute."""),
     "line_style": (line_style.T, line_style.default,
                    "The style of the outer frame of each box."),
-    "fill_style": (fill_style.T, lambda: fill_styles.next(),
+    "fill_style": (fill_style.T, lambda: next(fill_styles),
                    "Defines the fill style of each box.",
                    "The style is picked from standard styles round-robin."),
     "legend_line_style": (line_style.T, None,
@@ -124,7 +125,7 @@ def find_bar_plot(ar, nth):
     for plot in ar.plots():
         if isinstance(plot, T) and plot.cluster[0] == nth:
             return plot
-    raise Exception, "The %dth bar plot in the cluster not found." % nth   
+    raise Exception("The %dth bar plot in the cluster not found." % nth)   
 
 class T(chart_object.T):
     __doc__ = bar_plot_doc.doc
@@ -155,7 +156,7 @@ class T(chart_object.T):
         for pair in self._abs_data:
             if pair[self.bcol] == bval:
                 return pair[self.hcol]
-	raise ValueError, str(bval) + ": can't find the xval"
+        raise ValueError(str(bval) + ": can't find the xval")
 
     def get_data_range(self, which):
         if self.direction == 'vertical':
@@ -216,7 +217,7 @@ class T(chart_object.T):
                 can.show(thisX + self.width/2.0 + self.data_label_offset[0],
                             ar.y_pos(yval) + self.data_label_offset[1],
                             "/hC" + pychart_util.apply_format(self.data_label_format, (pair[self.bcol], pair[self.hcol]), 1))
-	    
+
     def draw_horizontal(self, ar, can):
         for pair in self.data:
             yval = pair[self.bcol]
@@ -238,8 +239,8 @@ class T(chart_object.T):
 
             if self.data_label_format:
                 can.show(ar.x_pos(xval) + self.data_label_offset[0],
-		            thisY + self.width/2.0 + self.data_label_offset[1],
-                            "/vM/hL" + pychart_util.apply_format(self.data_label_format, (pair[self.bcol], pair[self.hcol]), 1))
+                         thisY + self.width/2.0 + self.data_label_offset[1],
+                         "/vM/hL" + pychart_util.apply_format(self.data_label_format, (pair[self.bcol], pair[self.hcol]), 1))
 
     def get_legend_entry(self):
         if self.label:
@@ -249,7 +250,7 @@ class T(chart_object.T):
         return None
         
     def draw(self, ar, can):
-	assert self.check_integrity()
+        assert self.check_integrity()
         can.clip(ar.loc[0], ar.loc[1],
                 ar.loc[0] + ar.size[0], ar.loc[1] + ar.size[1])
             

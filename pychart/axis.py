@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #
 # Copyright (C) 2000-2005 by Yasushi Saito (yasushi.saito@gmail.com)
 # 
@@ -11,14 +12,14 @@
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
-import font
-import pychart_util
-import chart_object
-import line_style
+from . import font
+from . import pychart_util
+from . import chart_object
+from . import line_style
 import math
-import theme
-import axis_doc
-from pychart_types import *
+from . import theme
+from . import axis_doc
+from .pychart_types import *
 from types import *
 
 class T(chart_object.T):
@@ -31,7 +32,7 @@ class T(chart_object.T):
        "minor_tic_len" : (UnitType, 3, """The length of minor tick marks.  The value can be negative, in which case the tick lines are drawn right of (or above) the axis."""),
        "line_style": (line_style.T, line_style.default, 
                       "Specifies the style of axis and tick lines."),
-       "label": (types.StringType, "axis label",
+       "label": (bytes, "axis label",
                  "The descriptive string displayed below (or to the left of) the axis. <<font>>."),
        "format": (FormatType, "%s", 
                   """The format string for tick labels.
@@ -97,7 +98,7 @@ class X(T):
          
         if self.minor_tic_interval:
             for i in ar.x_tic_points(self.minor_tic_interval):
-                if tic_dic.has_key(i):
+                if i in tic_dic:
                     # a major tic was drawn already.
                     pass
                 else:
@@ -153,7 +154,7 @@ class Y(T):
             
         if self.minor_tic_interval:
             for i in ar.y_tic_points(self.minor_tic_interval):
-                if tic_dic.has_key(i):
+                if i in tic_dic:
                     # a major tic line was drawn already.
                     pass
                 else:
@@ -183,7 +184,7 @@ class Y(T):
             
         if self.minor_tic_interval:
             for i in ar.y_tic_points(self.minor_tic_interval):
-                if tic_dic.has_key(i):
+                if i in tic_dic:
                     # a major tic line was drawn already.
                     pass
                 else:

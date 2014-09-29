@@ -1,3 +1,4 @@
+from __future__ import print_function
 import glob
 import os.path
 
@@ -23,5 +24,5 @@ if __name__ == '__main__':
     # When invoked from the cmdline, just print the list of files to
     # the stdout.
     r = list_sources(".")
-    print " ".join(r)
+    print(" ".join(r))
 

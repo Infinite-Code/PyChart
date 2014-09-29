@@ -1,3 +1,4 @@
+from __future__ import print_function
 from pychart import *
 import pychart.doc_support
 import optik
@@ -57,27 +58,27 @@ def outputClassAttrs(moduleName, className):
 
         type_str = pychart.doc_support.stringify_type(val[0])
 
-        print "\\begin{memberdesc}{%s}\n\\textbf{Type:} %s" % (key, type_str)
+        print("\\begin{memberdesc}{%s}\n\\textbf{Type:} %s" % (key, type_str))
         if False:
-            print "\\label{%s.%s.%s}" % (moduleName.replace("_","-"),
+            print("\\label{%s.%s.%s}" % (moduleName.replace("_","-"),
                                          className.replace("_","-"),
-                                         key.replace("_", "-"))
-	mm = re.match("(.*)\\.T$", str(type_str))
-	if mm:
-	    print "(\\pxref{module-%s})" % re.sub("_", "-", mm.group(1))
+                                         key.replace("_", "-")))
+    mm = re.match("(.*)\\.T$", str(type_str))
+    if mm:
+        print("(\\pxref{module-%s})" % re.sub("_", "-", mm.group(1)))
 
         if len(val) > 3:
-            print "\\textbf{Default:} %s." % format_doc_string(val[3]),
+            print("\\textbf{Default:} %s." % format_doc_string(val[3]), end=' ')
         else:
-            print "\\textbf{Default:} %s." % format_doc_string(str(pychart.doc_support.stringify_value(val[1]))),
+            print("\\textbf{Default:} %s." % format_doc_string(str(pychart.doc_support.stringify_value(val[1]))), end=' ')
 
-        print ""
-        print ""
+        print("")
+        print("")
 
         if len(val) > 2:
-            print format_doc_string(val[2])
+            print(format_doc_string(val[2]))
 
-	print "\\end{memberdesc}"
+    print("\\end{memberdesc}")
     #print "@end multitable";
 
 def copy_file(src, dest):
@@ -101,8 +102,8 @@ def scan_nodes(fp):
 
 def include_text_file(file):
     fp = open(file, "r")
-    print "\\noindent\\bfcode{%s}\n\n" % file
-    print "\\begin{verbatim}"
+    print("\\noindent\\bfcode{%s}\n\n" % file)
+    print("\\begin{verbatim}")
 
     line = fp.readline()
     if line.startswith('#'):
@@ -112,12 +113,12 @@ def include_text_file(file):
             assert line
             if not line.startswith('#'):
                 break
-    print line,
+    print(line, end=' ')
     for line in fp.readlines():
         line = string.expandtabs(line)
-        print line,
+        print(line, end=' ')
     fp.close()
-    print "\\end{verbatim}"
+    print("\\end{verbatim}")
 
 def format_doc(str):
     out = ""
@@ -174,9 +175,9 @@ while True:
             copy_file("%s%s-c.%s" % (demoDir, basename, ext),
                       "%s.%s" % (basename, ext))
 
-        print "\\includegraphics{%s}\n" % (basename)
-        print description, "\n"
-        print "Below is the source code that produces the above chart."
+        print("\\includegraphics{%s}\n" % (basename))
+        print(description, "\n")
+        print("Below is the source code that produces the above chart.")
         include_text_file(demoDir + basename + ".py")
         continue
 
@@ -192,14 +193,14 @@ while True:
         for ext in ["png", "eps", "pdf"]:
             copy_file("%s%s-c.%s" % (demoDir, basename, ext),
                       "%s.%s" % (basename, ext))
-        print "\\includegraphics{%s}\n" % (basename)
+        print("\\includegraphics{%s}\n" % (basename))
         continue
 
     mo = re.match("^@pydescribe\{(.*)\}", line)
     if mo:
         obj_name = mo.group(1)
         obj = eval(obj_name)
-        print format_doc(str(obj.__doc__)), "\n"
+        print(format_doc(str(obj.__doc__)), "\n")
         continue
 
-    print line,
+    print(line, end=' ')
